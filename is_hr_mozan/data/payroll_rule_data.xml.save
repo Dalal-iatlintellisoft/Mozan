@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="hr_rule_loan" model="hr.salary.rule">
+			<field name="name">Long Loan</field>
+			<field name="sequence" eval="11"/>
+			<field name="code">LOLOAN</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -payslip.personal_loan</field>
+		</record>
+		<record id="hr_rule_short_loan" model="hr.salary.rule">
+			<field name="name">Short Loan</field>
+			<field name="sequence" eval="10"/>
+			<field name="code">SHLOAN</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -payslip.short_loan</field>
+		</record>
+
+		<record id="hr_rule_penalties_deduction" model="hr.salary.rule">
+			<field name="name">Warning</field>
+			<field name="sequence" eval="10"/>
+			<field name="code">Warning</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -payslip.penalties_deduction</field>
+		</record>
+		<record id="hr_rule_primary" model="hr.salary.rule">
+			<field name="name">Primary</field>
+			<field name="sequence" eval="1"/>
+			<field name="code">PRIMARY</field>
+			<field name="category_id" ref="hr_payroll.BASIC"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary*0.36</field>
+		</record>
+        <record id="hr_rule_gross" model="hr.salary.rule">
+			<field name="name">Gross</field>
+			<field name="sequence" eval="1"/>
+			<field name="code">GROSS</field>
+			<field name="category_id" ref="hr_payroll.GROSS"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary</field>
+		</record>
+
+		<!--<record id="hr_rule_basic" model="hr.salary.rule">-->
+			<!--<field name="name">Basic</field>-->
+			<!--<field name="sequence" eval="1"/>-->
+			<!--<field name="code">BASIC</field>-->
+			<!--<field name="category_id" ref="hr_payroll.BASIC"/>-->
+			<!--<field name="condition_select">none</field>-->
+			<!--<field name="amount_select">code</field>-->
+			<!--<field name="amount_python_compute">result = contract.gross_salary*0.36 + contract.gross_salary*0.23</field>-->
+		<!--</record>-->
+		<record id="hr_rule_cola" model="hr.salary.rule">
+			<field name="name">Cola</field>
+			<field name="sequence" eval="2"/>
+			<field name="code">COLA</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary*0.23</field>
+		</record>
+		<record id="hr_rule_transport" model="hr.salary.rule">
+			<field name="name">Transport</field>
+			<field name="sequence" eval="3"/>
+			<field name="code">TANSPORT</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary*0.2</field>
+		</record>
+		<record id="hr_rule_housing" model="hr.salary.rule">
+			<field name="name">Housing</field>
+			<field name="sequence" eval="3"/>
+			<field name="code">HOUSING</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary*0.21</field>
+		</record>
+
+		<record id="hr_rule_tax" model="hr.salary.rule">
+			<field name="name">Tax</field>
+			<field name="sequence" eval="120"/>
+			<field name="code">Tax</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -payslip.taxs</field>
+		</record>
+
+		<record id="hr_rule_social_in" model="hr.salary.rule">
+			<field name="name">Social Ins 8%.</field>
+			<field name="sequence" eval="8"/>
+			<field name="code">SocialIns</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -contract.gross_salary*0.08</field>
+		</record>
+
+		<record id="hr_rule_comp_social_in" model="hr.salary.rule">
+			<field name="name">Social Ins 17%.</field>
+			<field name="sequence" eval="8"/>
+			<field name="code">comp_SocialIns</field>
+			<field name="category_id" ref="hr_payroll.COMP"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -contract.gross_salary*0.17</field>
+		</record>
+
+		<record id="hr_rule_zakat" model="hr.salary.rule">
+			<field name="name">Zakat</field>
+			<field name="sequence" eval="8"/>
+			<field name="code">ZAKAT</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -contract.gross_salary*0.025</field>
+		</record>
+
+		<record id="hr_rule_stamp" model="hr.salary.rule">
+			<field name="name">Stamp</field>
+			<field name="sequence" eval="9"/>
+			<field name="code">stamp</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">fix</field>
+			<field name="quantity">1</field>
+			<field name="amount_fix">-1.0</field>
+		</record>
+
+		<record id="hr_rule_tot_deduction" model="hr.salary.rule">
+			<field name="name">Total Deduction</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">tot_ded</field>
+			<field name="category_id" ref="hr_payroll.NET"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = categories.DED</field>
+		</record>
+		<record id="hr_rule_pit" model="hr.salary.rule">
+			<field name="name">Personal Income Tax</field>
+			<field name="sequence" eval="9"/>
+			<field name="code">pit</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">
+if (contract.gross_salary-contract.gross_salary*.08)-30-70 &gt; 1560:
+	result= -(((((contract.gross_salary - contract.gross_salary*.08)-30-70)-1560)*0.15)+2.5)
+else:
+	result=0.0
+</field>
+		</record>
+
+		<record id="hr_rule_net" model="hr.salary.rule">
+			<field name="name">Net</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">NET</field>
+			<field name="category_id" ref="hr_payroll.NET"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary + categories.DED</field>
+		</record>
+
+		<record id="hr_rule_incentive" model="hr.salary.rule">
+			<field name="name">New Incentive</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">incen</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.total_incentive/12</field>
+		</record>
+
+
+		<record id="hr_rule_allowance" model="hr.salary.rule">
+			<field name="name">Leave Allowance</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">leave</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.total_incentive * 0.6</field>
+		</record>
+
+		<record id="hr_rule_ramadan" model="hr.salary.rule">
+			<field name="name">Ramadan</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">rmdn</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.total_incentive * 0.1</field>
+		</record>
+
+		<record id="hr_rule_fitr" model="hr.salary.rule">
+			<field name="name">Eid Fitr</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">fitr</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.total_incentive * 0.1</field>
+		</record>
+
+		<record id="hr_rule_adha" model="hr.salary.rule">
+			<field name="name">Eid Adha</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">adha</field>
+			<field name="category_id" ref="hr_payroll.ALW"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.total_incentive * 0.2</field>
+		</record>
+
+		<record id="hr_rule_wage" model="hr.salary.rule">
+			<field name="name">New Total Salary</field>
+			<field name="sequence" eval="200"/>
+			<field name="code">slry</field>
+			<field name="category_id" ref="hr_payroll.NET"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = contract.gross_salary +  contract.total_incentive/12</field>
+		</record>
+
+		<record id="hr_rule_unpaid" model="hr.salary.rule">
+			<field name="name">Unpaid</field>
+			<field name="sequence" eval="30"/>
+			<field name="code">Unpaid</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = -payslip.unpaid_leave</field>
+		</record>
+
+		<record id="structure_mozan" model="hr.payroll.structure">
+			<field name="code">Mozan</field>
+			<field name="name">Mozan Structure</field>
+			<field eval="[(6, 0,[ref('hr_rule_primary'),ref('hr_rule_gross'),ref('hr_rule_cola'),ref('hr_rule_transport'),ref('hr_rule_comp_social_in'),ref('hr_rule_housing'),ref('hr_rule_social_in'), ref('hr_rule_pit'),ref('hr_rule_stamp'),ref('hr_rule_tot_deduction'),ref('hr_rule_loan'),ref('hr_rule_short_loan'),ref('hr_rule_tax'),ref('hr_rule_net'),ref('hr_rule_incentive'),ref('hr_rule_penalties_deduction'),ref('hr_rule_unpaid'),ref('hr_rule_wage')])]" name="rule_ids"/>
+			<field name="company_id" ref="base.main_company"/>
+		</record>
+
+		<record id="structure_mozan_trainee" model="hr.payroll.structure">
+			<field name="code">Mozan Trainee</field>
+			<field name="name">Mozan Trainee Structure</field>
+			<field eval="[(6, 0, [ref('hr_rule_net'),ref('hr_rule_tot_deduction')])]" name="rule_ids"/>
+			<field name="company_id" ref="base.main_company"/>
+		</record>
+
+	</data>
+</odoo>

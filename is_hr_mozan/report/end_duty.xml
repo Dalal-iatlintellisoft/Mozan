@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="end_duty_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+
+                        <div class="page">
+                            <div class="oe_structure">
+                                <div class="row row-centered">
+                                    <div class="col-md-12 col-centered">
+                                        <group string="Financial Approval">
+                                            <table class="table" style="direction: rtl;">
+                                                <tr class="text-center">
+                                                    <td colspan="12" style="border: 1px solid black;">
+                                                        <h6 class="text-center" style="border-bottom: 1px solid black;">
+
+                                                            <u>
+                                                                <strong> تصفية مستحقات </strong>
+                                                            </u>
+                                                        </h6>
+                                                    </td>
+                                                </tr>
+
+                                               </table>
+                                            <br></br>
+                                            <table   style="width:100%;align:right;direction:rtl" border="0" >
+                                                <tr>
+                                        <td style="align:right;font-size: 100%;font-weight: normal;">اسم الموظف :<span t-field="o.employee_id"/></td>
+                                        <td style="align:right;font-size: 100%;font-weight: normal;">القسم :<span t-field="o.department_id.name"/></td>
+                                                    </tr>
+                                                <tr>
+                                        <td style="align:right;font-size: 100%;font-weight: normal;">تاريخ التعين :<span t-field="o.hiring_date"/></td>
+                                          <td style="align:right;font-size: 100%;font-weight: normal;">اخر يوم عمل  :<span t-field="o.end_day"/></td>
+                                          <!--<td style="align:right;font-size: 100%;font-weight: normal;">فترة العمل :  :<span t-field="o.fench_experience"/></td>-->
+
+
+                                                </tr>
+
+                                                    </table>
+                                            <br></br><br></br>
+                                            <strong>يحسب لصالح الموظف </strong>
+
+                                          <table  class="table-bordered" style="width:100%;align:right;direction:ltr" border="1" >
+                                  <tr>
+                                      <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">البند</td>
+                                      <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">العدد</td>
+                                      <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">المبلغ</td>
+                                      <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">العملة</td>
+                                      </tr>
+                                              <tr>
+                                      <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">الرواتب المستحقة</td>
+
+                                      <td class="text-center">  <span t-field="o.month"/></td>
+                                      <td class="text-center">  <span t-field="o.salary_amount"/></td>
+                                      <td class="text-center">  <span t-field="o.currency"/></td>
+
+
+                                  </tr>
+
+                                                  </table>
+
+
+
+                                            </group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </template>
+        </data>
+    </openerp>

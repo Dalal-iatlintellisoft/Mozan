@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<menuitem name="Addition" parent="hr.menu_hr_root" id="menu_employee_addition" sequence="1900"/>
+	<!--hr.employee.work.experience-->
+	<!--<record id="hr_main_department_tree" model="ir.ui.view">-->
+		<!--<field name="name">hr.main.department.tree</field>-->
+		<!--<field name="model">hr.main.department</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<tree>-->
+				<!--<field name="name"/>-->
+				<!--<field name="department_id"/>-->
+				<!--<field name="manager_id"/>-->
+			<!--</tree>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_main_department_form" model="ir.ui.view">-->
+		<!--<field name="name">hr.main.department.form</field>-->
+		<!--<field name="model">hr.main.department</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form>-->
+				<!--<sheet>-->
+					<!--<group col="4">-->
+						<!--<field name="name"/>-->
+						<!--<field name="department_id"/>-->
+						<!--<field name="manager_id"/>-->
+					<!--</group>-->
+				<!--</sheet>-->
+			<!--</form>-->
+
+		<!--</field>-->
+	<!--</record>-->
+
+	<!--<record id="action_hr_main_department" model="ir.actions.act_window">-->
+		<!--<field name="name">Main Department</field>-->
+		<!--<field name="res_model">hr.main.department</field>-->
+		<!--<field name="view_mode">tree,form</field>-->
+	<!--</record>-->
+	<!--<menuitem name="Main Department" parent="hr.menu_hr_root" id="menu_main_department" action="action_hr_main_department" />-->
+
+	<!--&lt;!&ndash;configuration&ndash;&gt;-->
+
+	<!--&lt;!&ndash;hr.educational.level&ndash;&gt;-->
+	<!--<record id="hr_educational_level_tree" model="ir.ui.view">-->
+		<!--<field name="name">hr.educational.level.tree</field>-->
+		<!--<field name="model">hr.educational.level</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<tree>-->
+				<!--<field name="name"/>-->
+			<!--</tree>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_educational_level_form" model="ir.ui.view">-->
+		<!--<field name="name">hr.educational.level.form</field>-->
+		<!--<field name="model">hr.educational.level</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form>-->
+				<!--<sheet>-->
+					<!--<group>-->
+						<!--<field name="name"/>-->
+					<!--</group>-->
+				<!--</sheet>-->
+			<!--</form>-->
+
+		<!--</field>-->
+	<!--</record>-->
+
+	<!--<record id="action_hr_educational_level" model="ir.actions.act_window">-->
+		<!--<field name="name">Educational Level</field>-->
+		<!--<field name="res_model">hr.educational.level</field>-->
+		<!--<field name="view_mode">tree,form</field>-->
+	<!--</record>-->
+	<!--<menuitem name="Educational Level" parent="hr.menu_human_resources_configuration" id="menu_hr_educational_level" action="action_hr_educational_level"/>-->
+
+
+	<!--&lt;!&ndash;hr.employee.work.experience&ndash;&gt;-->
+	<!--<record id="hr_employee_work_experience_tree" model="ir.ui.view">-->
+		<!--<field name="name">hr.employee.work.experience.tree</field>-->
+		<!--<field name="model">hr.employee.work.experience</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<tree>-->
+				<!--<field name="name"/>-->
+				<!--<field name="employee_id"/>-->
+				<!--<field name="address"/>-->
+				<!--<field name="leave"/>-->
+				<!--<field name="salary"/>-->
+				<!--<field name="date_from"/>-->
+				<!--<field name="date_to"/>-->
+			<!--</tree>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_employee_work_experience_form" model="ir.ui.view">-->
+		<!--<field name="name">hr.employee.work.experience.form</field>-->
+		<!--<field name="model">hr.employee.work.experience</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form>-->
+				<!--<sheet>-->
+					<!--<group col="4">-->
+						<!--<field name="name"/>-->
+						<!--<field name="employee_id"/>-->
+						<!--<field name="address"/>-->
+						<!--<field name="leave"/>-->
+						<!--<field name="salary"/>-->
+						<!--<field name="date_from"/>-->
+						<!--<field name="date_to"/>-->
+					<!--</group>-->
+				<!--</sheet>-->
+			<!--</form>-->
+
+		<!--</field>-->
+	<!--</record>-->
+
+	<!--<record id="action_hr_employee_work_experience" model="ir.actions.act_window">-->
+		<!--<field name="name">Employee Work Experience</field>-->
+		<!--<field name="res_model">hr.employee.work.experience</field>-->
+		<!--<field name="view_mode">tree,form</field>-->
+	<!--</record>-->
+	<!--<menuitem name="Employee Work Experience" parent="menu_employee_experience" id="menu_hr_employee_work_experience" action="action_hr_employee_work_experience"/>-->
+
+
+	<!-- HR employee inherit -->
+	<!--<record id="view_employee_form_inherit" model="ir.ui.view">-->
+		<!--<field name="name">hr.employee.form.inherit</field>-->
+		<!--<field name="model">hr.employee</field>-->
+		<!--<field name="inherit_id" ref="hr.view_employee_form"/>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<xpath expr="//notebook/page[@name='personal_information']" position="after">-->
+				<!--<page string="Employee Training">-->
+					<!--<field name="emp_training_ids" nolabel="1">-->
+						<!--<tree editable="bottom">-->
+							<!--<field name="traininga_id"/>-->
+							<!--<field name="duration"/>-->
+							<!--<field name="location"/>-->
+							<!--<field name="date_from"/>-->
+							<!--<field name="date_to"/>-->
+							<!--<field name="attend"/>-->
+						<!--</tree>-->
+					<!--</field>-->
+				<!--</page>-->
+				<!--<page string="Employee Penalties">-->
+					<!--<field name="penalty_ids" nolabel="1">-->
+						<!--<tree editable="bottom">-->
+							<!--<field name="employee_id"/>-->
+							<!--<field name="date"/>-->
+							<!--<field name="violation_id"/>-->
+							<!--<field name="penalty_type"/>-->
+							<!--<field name="penalty" attrs="{'invisible':[('penalty_type','!=','warning')]}"/>-->
+						<!--</tree>-->
+					<!--</field>-->
+				<!--</page>-->
+			<!--</xpath>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!-- Trainee -->
+	<!--<record id="hr_trainee_tree" model="ir.ui.view">-->
+		<!--<field name="name">hr.trainee.tree</field>-->
+		<!--<field name="model">hr.trainee</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<tree string="Trainee">-->
+				<!--<field name="name"/>-->
+				<!--<field name="job_id"/>-->
+				<!--<field name="duration"/>-->
+				<!--<field name="date_from"/>-->
+				<!--<field name="date_to"/>-->
+			<!--</tree>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_trainee_form" model="ir.ui.view">-->
+		<!--<field name="name">hr.trainee.form</field>-->
+		<!--<field name="model">hr.trainee</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form string="Trainee">-->
+				<!--<header>-->
+					<!--<button string="Department Manager Approval" name="dm_approve" states="draft" type="object"  class="oe_highlight" groups="is_hr_watania.group_department_manager"/>-->
+					<!--<button string="Training Manager Approval" name="tm_approve" states="dm" type="object" class="oe_highlight" groups="is_hr_watania.group_training_manager"/>-->
+					<!--<button string="Hr Manager Approval" name="hm_approve" states="tm" type="object" class="oe_highlight" groups="hr.group_hr_manager"/>-->
+					<!--<button string="Hr General Approval" name="gm_approve" states="hr" type="object" class="oe_highlight" groups="is_hr_watania.group_hr_general_manager"/>-->
+					<!--<button string="Close" name="close" states="gm" type="object" class="oe_highlight" groups="is_hr_watania.group_department_manager"/>-->
+					<!--<button string="Refuse" name="refuse" states="draft, dm, tm, hr" type="object" class="oe_highlight" groups="is_hr_watania.group_department_manager,is_hr_watania.group_training_manager,hr.group_hr_manager,is_hr_watania.group_hr_general_manager"/>-->
+					<!--<field name="state" widget="statusbar"/>-->
+				<!--</header>-->
+				<!--<sheet>-->
+					<!--<group col="4">-->
+						<!--<field name="name" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="trainee_type" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="address" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="date_of_birth" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="marital" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="educational_id" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="specialization" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="work_experience" widget="radio" attrs="{'readonly':[('state','=','dm')],'invisible':[('trainee_type','!=','trainee')]}"/>-->
+						<!--<field name="experience_year" attrs="{'readonly':[('state','=','dm')],'invisible':[('trainee_type','!=','trainee')]}"/>-->
+						<!--<field name="job_id" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="main_department_id" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="department_id" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="date_from" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="date_to" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="duration" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="has_salary" attrs="{'readonly':[('state','=','gm')]}"/>-->
+						<!--<field name="salary" attrs="{'invisible':[('has_salary','=',False)]}" />-->
+						<!--<field name="employee_account" attrs="{'readonly':[('state','=','dm')],'invisible':[('has_salary','=',False)]}"/>-->
+					<!--</group>-->
+					<!--<group string="Reason">-->
+						<!--<field name='reason' placeholder="Reason ......."/>-->
+					<!--</group>-->
+					<!--<notebook>-->
+						<!--<page string="Comments">-->
+							<!--<group string="Comments">-->
+								<!--<field name="d_comment" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+								<!--<field name="t_comment" attrs="{'readonly':[('state','!=','dm')],'invisible':[('trainee_type','!=','trainee')]}"/>-->
+								<!--<field name="hr_comment" attrs="{'readonly':[('state','!=','tm')]}"/>-->
+								<!--<field name="hrg_comment" attrs="{'readonly':[('state','!=','hr')]}"/>-->
+							<!--</group>-->
+						<!--</page>-->
+					<!--</notebook>-->
+				<!--</sheet>-->
+			<!--</form>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_trainee_search" model="ir.ui.view">-->
+		<!--<field name="name">hr.trainee.search</field>-->
+		<!--<field name="model">hr.trainee</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<search string="Trainee">-->
+				<!--<field name="name"/>-->
+				<!--<field name="department_id"/>-->
+				<!--<field name="job_id"/>-->
+				<!--<group expand="0" string="Group By">-->
+					<!--<filter string="Department" domain="[]" context="{'group_by':'department_id'}"/>-->
+					<!--<filter string="Job" domain="[]" context="{'group_by':'job_id'}"/>-->
+				<!--</group>-->
+			<!--</search>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_trainee_action" model="ir.actions.act_window">-->
+		<!--<field name="name">Trainee</field>-->
+		<!--<field name="res_model">hr.trainee</field>-->
+		<!--<field name="view_mode">tree,form</field>-->
+	<!--</record>-->
+	<!--<menuitem name="Trainee" parent="hr.menu_hr_root" id="menu_hr_trainee" action="hr_trainee_action"/>-->
+
+
+
+	<!--&lt;!&ndash;Employee Appraisal&ndash;&gt;-->
+	<!--<record id="hr_emp_appraisal_tree" model="ir.ui.view">-->
+		<!--<field name="name">hr.emp.appraisal.tree</field>-->
+		<!--<field name="model">hr.emp.appraisal</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<tree>-->
+				<!--<field name="employee_id"/>-->
+				<!--<field name="total"/>-->
+				<!--<field name="level"/>-->
+			<!--</tree>-->
+		<!--</field>-->
+	<!--</record>-->
+	<!--<record id="hr_emp_appraisal_form" model="ir.ui.view">-->
+		<!--<field name="name">hr.emp.appraisal.form</field>-->
+		<!--<field name="model">hr.emp.appraisal</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form>-->
+				<!--<header>-->
+					<!--<button string="Approve" name="d_approve" states="draft" type="object"  class="oe_highlight" groups="base.group_user"/>-->
+					<!--&lt;!&ndash;<button string="Confirm" name="approve" states="approve" type="object"  class="oe_highlight" />&ndash;&gt;-->
+					<!--<button string="Send To Hr Manager" name="to_hr" states="confirm" type="object"  class="oe_highlight" groups="is_hr_watania.group_department_manager"/>-->
+					<!--<button string="Send To Hr General Manager" name="to_hgm" states="hr" type="object"  class="oe_highlight" groups="hr.group_hr_manager"/>-->
+					<!--<button string="Send To General Manager" name="to_gm" states="hgm" type="object"  class="oe_highlight" groups="is_hr_watania.group_hr_general_manager"/>-->
+					<!--<button string="Manager Approval" name="done" states="gm" type="object"  class="oe_highlight" groups="is_hr_watania.group_general_manager"/>-->
+					<!--<button string="Refuse" name="refuse" states="draft,confirm,hr" type="object"  class="oe_highlight" groups="is_hr_watania.group_department_manager, hr.group_hr_manager, is_hr_watania.group_hr_general_manager, is_hr_watania.group_general_manager"/>-->
+					<!--<button string="Reset To Draft" name="reset" states="refuse" type="object" class="oe_highlight" groups="is_hr_watania.group_department_manager, hr.group_hr_manager, is_hr_watania.group_hr_general_manager, is_hr_watania.group_general_manager"/>-->
+					<!--<field name="state" widget="statusbar" />-->
+				<!--</header>-->
+				<!--<sheet>-->
+					<!--<group col="4">-->
+						<!--<field name="employee_id" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="user_id"/>-->
+						<!--<field name="main_department_id" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="department_id" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="job_id" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="date" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="hiring_date" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="promotion_date" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="marital" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="children" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="members_ids" widget="many2many_tags" attrs="{'readonly':[('state','=','done')]}"/>-->
+					<!--</group>-->
+					<!--<group col="4">-->
+						<!--<field name="qualifications" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="violations" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="disease" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="features" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="experience" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="tasks" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="total" attrs="{'readonly':[('state','=','done')]}"/>-->
+						<!--<field name="level" attrs="{'readonly':[('state','=','done')]}"/>-->
+					<!--</group>-->
+					<!--<notebook>-->
+						<!--<page string="Personal Features">-->
+							<!--<field name="personal_features_ids" nolabel="1" attrs="{'readonly':[('state','=','done')]}">-->
+								<!--<tree editable="bottom">-->
+									<!--<field name="name"/>-->
+									<!--<field name="level"/>-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Professional and technical expertise" attrs="{'readonly':[('state','=','done')]}">-->
+							<!--<field name="professional_experience_ids" nolabel="1">-->
+								<!--<tree editable="bottom">-->
+									<!--<field name="name"/>-->
+									<!--<field name="level"/>-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Professional and technical performance" attrs="{'readonly':[('state','=','done')]}">-->
+							<!--<field name="performance_tasks_ids" nolabel="1">-->
+								<!--<tree editable="bottom">-->
+									<!--<field name="name"/>-->
+									<!--<field name="level"/>-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Approval">-->
+							<!--<group col="4">-->
+								<!--<field name="dmanager_id"/>-->
+								<!--<field name="d_manager_id"/>-->
+								<!--<field name="dg_manager_id"/>-->
+								<!--<field name="hrg_manager_id"/>-->
+								<!--<field name="gm_manager_id"/>-->
+							<!--</group>-->
+						<!--</page>-->
+					<!--</notebook>-->
+				<!--</sheet>-->
+			<!--</form>-->
+		<!--</field>-->
+	<!--</record>-->
+
+	<!--<record id="action_hr_emp_appraisal" model="ir.actions.act_window">-->
+		<!--<field name="name">Employee Appraisal</field>-->
+		<!--<field name="res_model">hr.emp.appraisal</field>-->
+		<!--<field name="view_mode">tree,form</field>-->
+	<!--</record>-->
+	<!--<menuitem name="Employee Appraisal" parent="menu_employee_addition" id="menu_hr_emp_appraisal" action="action_hr_emp_appraisal"/>-->
+	<!---->
+	<!--<record id="hr_incentives_line_tree_view" model="ir.ui.view">-->
+		<!--<field name="name">hr.incentives.line.tree</field>-->
+		<!--<field name="model">hr.incentives.line</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<tree string="hr incentives line">-->
+				<!--<field name="date"/>-->
+				<!--<field name="employee_id"/>-->
+				<!--<field name="name"/>-->
+				<!--<field name="contract_id"/>-->
+				<!--<field name="department_id"/>-->
+				<!--<field name="date"/>-->
+				<!--<field name="state"/>-->
+			<!--</tree>-->
+		<!--</field>-->
+	<!--</record>-->
+	<record id="hr_incentives_line_form_view" model="ir.ui.view">
+		<field name="name">hr.incentives.line.form</field>
+		<field name="model">hr.incentives.line</field>
+		<field name="arch" type="xml">
+			<form string="hr incentives line">
+				<header>
+					<button string="Confirm" name="action_approve" groups="hr.group_hr_manager" states="draft" type="object"  class="oe_highlight" />
+					<button string="Done" name="action_done" groups="account.group_account_manager" states="approve" type="object"  class="oe_highlight" />
+					<button string="Refuse" name="action_refuse" groups="account.group_account_manager" states="approve" type="object"  class="oe_highlight" />
+					<button string="Reset To Draft" name="action_reset" groups="hr.group_hr_manager" states="refuse" type="object" class="oe_highlight"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,approve,done" />
+				</header>
+				<sheet>
+					<group col="4">
+						<field name="employee_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="name" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="department_id"/>
+						<field name="job_id"/>
+						<field name="contract_id"/>
+					</group>
+					<group col="4">
+						<field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="total_net"/>
+					</group>
+					<notebook attrs="{'invisible':[('state','=','draft')]}">
+						<page string="Accounting Information">
+							<group col="4">
+								<field name="debit_account" attrs="{'required':[('state','!=','draft')],'readonly':[('state','=','done')]}"/>
+								<field name="credit_account" attrs="{'required':[('state','!=','draft')],'readonly':[('state','=','done')]}"/>
+								<field name="analytic_debit_account_id"/>
+								<field name="journal_id" attrs="{'required':[('state','!=','draft')],'readonly':[('state','=','done')]}"/>
+								<field name="move_id" attrs="{'invisible':[('state','!=','done')]}"/>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+
+			</form>
+		</field>
+	</record>
+	<record id="hr_incentives_line_filter" model="ir.ui.view">
+		<field name="name">hr.incentives.line.search</field>
+		<field name="model">hr.incentives.line</field>
+		<field name="arch" type="xml">
+			<search string="Search Allowance">
+				<field name="name" string="Grant Name"/>
+				<field name="employee_id"/>
+				<field name="date"/>
+				<filter string="Draft" domain="[('state','=','draft')]" help="Draft Grant"/>
+				<filter string="approve" domain="[('state','=','approve')]" help="Approve Grant"/>
+				<filter name="done_filter" string="Done" domain="[('state','=','done')]" help="Done Grant"/>
+				<group col="8" colspan="4" expand="0" string="Group By">
+					<filter string="State" name="state" context="{'group_by':'state'}"/>
+					<filter string="Employees" name="employee_id" context="{'group_by':'employee_id'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+	<record id="action_hr_incentives_line" model="ir.actions.act_window">
+		<field name="name">Incentives For Employee</field>
+		<field name="res_model">hr.incentives.line</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="hr_incentives_line_filter"/>
+	</record>
+	<menuitem parent="menu_employee_addition" id="menu_hr_incentives_line" action="action_hr_incentives_line" />
+
+
+
+</odoo>

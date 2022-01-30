@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="action_purchase_request">
+            <field name="name">Request for Purchase</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('request_id','=',active_id)]</field>
+            <field name="context">{"default_request_id":active_id}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_stock_picking">
+            <field name="name">Request for Purchase</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('request_id','=',active_id)]</field>
+            <field name="context">{"default_request_id":active_id}</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_material_request_form">
+            <field name="name">material.request.form</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <form string="Material Request">
+                    <header>
+                        <field name="delivered_all" invisible="1"/>
+                        <field name="checked" invisible="1"/>
+                        <field name="purchase" invisible="1"/>
+                        <button name="button_confirm" states="draft" string="Confirm" type="object" class="btn-primary"/>
+                        <button name="button_department_approve" states="confirm" string="Department Approve" type="object" class="btn-primary"/>
+                        <button name="button_manager_approve" states="department_approve" string="Manager Approve" type="object" class="btn-primary"/>
+                        <button name="button_stock_approve" states="manager_approve" string="Stock Approve" type="object" class="btn-primary"/>
+                        <button name="button_stock_check" string="Check Availability" attrs="{'invisible': [('state', '!=','manager_approve' )]}" type="object" class="btn-primary"/>
+                        <button name="button_stock_picking" string="Create Delivery Order" attrs="{'invisible': ['|',('state', '!=','manager_approve' ),('delivered_all', '=',True )]}" type="object" class="btn-primary"/>
+                        <button name="button_purchase_request" string="Create Purchase Request" attrs="{'invisible': ['|', ('purchase','=',True),('state', '!=', 'manager_approve')]}" type="object" class="btn-primary"/>
+                        <!--<button name="button_Public_approve" states="stock_approve" string="Public Administration" type="object" class="btn-primary"/>-->
+                        <button name="action_done" states="stock_approve" string="Locked" type="object" class="btn-primary"/>
+                        <button name="button_cancel" states="draft,confirm,department_approve,stock_approve,manager_approve" string="Cancel Call" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="confirm,department_approve,manager_approve,stock_approve,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(action_stock_picking)d" type="action" class="oe_stat_button" icon="fa-list-alt"
+                                    attrs="{'invisible': [('state', 'not in', ('stock_approve','manager_approve','done'))]}">
+                                <field name="picking_count" widget="statinfo" string="Delivery Orders"/>
+                            </button>
+                            <button name="%(action_purchase_request)d" type="action" class="oe_stat_button" icon="fa-list-alt"
+                                    attrs="{'invisible': [('state', 'not in', ('stock_approve','manager_approve','done'))]}">
+                                <field name="purchase_count" widget="statinfo" string="Purchase Request"/>
+                            </button>
+                        </div>
+                        <div class="pull-left">
+                            <label for="name" class="oe_edit_only oe_inline"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group >
+                                <field name="applicant_name"/>
+                                <field name="department_id"/>
+                                <!--<field name="administration"/>-->
+                                <field name="project_name"/>
+                                <field name="locatin"/>
+                            </group>
+                            <group >
+                                <field name="request_copy" attrs="{'invisible': [('state','in',('draft','confirm','department_approve'))]}"/>
+                                <field name="date_approve" attrs="{'readonly': [('state','in',('draft','confirm','department_approve'))]}"/>
+                                <field name="ordering_date" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                <field name="picking_type_id" widget="selection" invisible="1"/>
+                                <field name="account_analytic_id" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="request_lines"  attrs="{'readonly': [('state','in',('done'))]}">
+                                    <tree string="Products" editable="bottom" decoration-danger="available == False and state == 'manager_approve' " decoration-muted="delivered == True and state == 'manager_approve'">
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="ordered_qty" attrs="{'readonly': [('state','not in',('draft','confirm'))]}"/>
+                                        <field name="product_qty" attrs="{'invisible': [('state','in',('draft','confirm','department_approve'))]}"/>
+                                        <field name="description"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="schedule_date" />
+                                        <field name="account_analytic_id" invisible="1"/>
+                                        <!--<field name="price_unit" invisible="1"/>-->
+                                        <field name="available"/>
+                                        <field name="delivered"/>
+                                    </tree>
+                                    <form string="Products">
+                                        <group>
+                                            <field name="product_id" />
+                                            <field name="ordered_qty"/>
+                                            <field name="product_qty"/>
+                                            <field name="product_uom_id" />
+                                            <field name="description"/>
+                                            <field name="schedule_date"/>
+                                            <field name="account_analytic_id" />
+                                            <field name="available" readonly="1"/>
+                                            <field name="delivered" readonly="1"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <separator string="Application description"/>
+                                <field name="description" attrs="{'readonly': [('state','!=',('confirm'))]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_material_request_tree">
+            <field name="name">material.request.tree</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <tree decoration-bf="message_needaction==True" decoration-muted="state == 'cancel'"  string="Material Request">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name"/>
+                    <field name="applicant_name"/>
+                    <field name="department_id"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="ordering_date"/>
+                    <field name="origin"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_material_request_kanban" model="ir.ui.view">
+            <field name="name">material.request.kanban</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="applicant_name"/>
+                    <field name="department_id"/>
+                    <!--<field name="type_id"/>-->
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><field name="name"/></span></strong>
+                                    </div>
+                                    <field name="state" widget="kanban_label_selection" options="{'classes': {'draft': 'default', 'confirm': 'default', 'department_approve': 'success', 'stock_approve': 'success', 'manager_approve': 'success','done': 'success', 'close': 'danger'}}"/>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <!--<span class="text-muted"><field name="type_id"/></span>-->
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_material_request_filter" model="ir.ui.view">
+            <field name="name">material.request.list.select</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <search string="Search Material Request">
+                    <field name="name" string="Purchase Request" filter_domain="['|', ('name','ilike',self), ('origin','ilike',self)]"/>
+                    <!--<field name="type_id"/>-->
+                    <filter name="draft" string="Draft" domain="[('state','=','draft')]" help="New Request"/>
+                    <filter string="Confirmed" domain="[('state','in',('confirm','department_approve'))]" help="In negotiation"/>
+                    <filter string="Done" domain="[('state','=','done')]"/>
+                    <separator/>
+                    <filter string="Unassigned"  domain="[('applicant_name','=', False)]" help="Unassigned  Requisition"/>
+                    <field name="applicant_name" />
+                    <field name="applicant_name" />
+                    <group expand="0" string="Group By">
+                        <filter string="Responsible" domain="[]" context="{'group_by':'applicant_name'}"/>
+                        <filter string="Department" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Source" domain="[]" context="{'group_by':'origin'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Ordering Date" domain="[]" context="{'group_by':'ordering_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_material_request">
+            <field name="name">Material Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">material.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{"search_default_user_id":uid}</field>
+            <field name="search_view_id" ref="view_material_request_filter"/>
+        </record>
+
+        <menuitem id="menu_stock_request" name="Requests" parent="stock.menu_stock_root"  sequence="1"/>
+        <menuitem id="menu_material_request" sequence="10" parent="menu_stock_request" action="action_material_request"/>
+
+        <!--<act_window-->
+        <!--domain="[('request_id', '=', active_id)]"-->
+        <!--context="{'default_request_id': active_id}"-->
+        <!--id="act_res_partner_2_purchase_order"-->
+        <!--name="Purchase orders"-->
+        <!--res_model="purchase.order"-->
+        <!--src_model="purchase.request"/>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="end_duty_tree" model="ir.ui.view">
+        <field name="model">end.duty</field>
+        <field name="arch" type="xml">
+            <tree string=" End Duty ">
+                <field name="name" />
+                <field name="employee_id" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+    <record id="end_duty_form" model="ir.ui.view">
+        <field name="name">End Duty form</field>
+        <field name="model">end.duty</field>
+        <field name="arch" type="xml">
+            <form string="Employee Benefits ">
+                <header>
+                    <button string="الشئون الادارية" name="send_request"  states="draft" type="object"  class="oe_highlight" />
+                    <button string="الشئون المالية  " name="confirm_request"  states="sent"  type="object"  class="oe_highlight" />
+                    <button string="المدير التنفيذى" name="approve_request"  states="confirm" type="object"  class="oe_highlight" />
+                    <button string="مخالصة نهائية" name="done_request"        states="approve" type="object"  class="oe_highlight" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,confirm,done" />
+                </header>
+                <sheet>
+                     <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                        <field name="name" attrs="{'readonly':[('state', '!=' ,'draft')]}"  />
+                        </h1>
+                    </div>
+
+                    <group col="4" string="Employee Informations">
+                        <field name="employee_id" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="department_id"  attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="job_id"  attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="staff_no" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="reson" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="wage" />
+                        <field name="currency" />
+
+                    </group>
+
+                     <group col="4" string = 'Date and Time'>
+                        <field name="date_of_form"  attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="end_day" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="hiring_date"  attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <!--<field name="year_experience" />-->
+                        <!--<field name="month_experience"  />-->
+                        <field name="fench_experience"  />
+                    </group>
+
+                    <notebook>
+                        <page string="Employee Benefits">
+                            <group>
+                                <field name="month" />
+                                <field name="salary_amount" />
+                                <field name="other_receivables" />
+                                <field name="overtime" />
+                                <field name="leave_balance" />
+                                <field name="value_vacation" />
+                                <field name="total_receivables" />
+                                <field name="total" />
+                                <!--<field name="request_currency" string="العملة" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="request_amount_words"  string=" المبلغ كتابة " attrs="{'readonly':[('state','not in',['draft'])]}"/>-->
+                            </group>
+                        </page>
+                        <page string="Dedication">
+                            <group>
+                                <field name="dedication" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                                <field name="dedication_notes" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                                <field name="loan_dedication" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                            </group>
+                        </page>
+                        <page string="Accounts">
+                            <group>
+                                <!--<field name="total" />-->
+                                <field name="debit_account"  />
+                                <field name="credit_account"/>
+                                <field name="journal_id" />
+                            </group>
+                        </page>
+
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="end_duty_search" model="ir.ui.view">
+        <field name="name">end.duty.search</field>
+        <field name="model">end.duty</field>
+        <field name="arch" type="xml">
+            <search string=" End duty">
+                <field name="employee_id" />
+                <field name="state"/>
+                <field name="name"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state"  domain="[]" context="{'group_by' : 'employee_id'}" />
+                    <filter name="group_by_state"  domain="[]" context="{'group_by' : 'state'}" />
+                    <filter name="group_by_name"  domain="[]" context="{'group_by' : 'name'}" />
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_End_duty_management_menu" model="ir.actions.act_window">
+        <field name="name">Employee Benefits</field>
+        <field name="res_model">end.duty</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_End_duty_management" model="ir.actions.act_window">
+        <field name="name">Employee Benefits</field>
+        <field name="res_model">end.duty</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="End of service " parent="menu_french_hr" id="menu_services"  groups="base.group_user" sequence="50"/>
+    <menuitem  parent="menu_services" id="menu_End_menu_services" action="action_End_duty_management_menu"   sequence="7"/>
+
+
+    <record id="resignation_tree" model="ir.ui.view">
+        <field name="model">resignation</field>
+        <field name="arch" type="xml">
+            <tree string=" resignation ">
+                <field name="name" />
+                <field name="employee_id" />
+                <field name="state" />
+                <field name="type" />
+            </tree>
+        </field>
+    </record>
+    <record id="resignation_form" model="ir.ui.view">
+        <field name="name">resignation.form</field>
+        <field name="model">resignation</field>
+        <field name="arch" type="xml">
+            <form string="Quit">
+                <header>
+                    <button string=" ارسال مدير القسم " name="send_request"  states="draft" type="object"    class="oe_highlight"   />
+                    <button string=" الموارد البشرية" name="confirm_request"  states="sent" type="object"    class="oe_highlight" />
+                    <button string="‫التنفيذي‬ ‫المدير‬" name="approve_request"  states="confirm" type="object"  class="oe_highlight"/>
+                    <button string=" ارسال للموارد البشرية للاعتماد" name="done_request"  states="approve" type="object"  class="oe_highlight" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,approve,confirm,done,accept" />
+                </header>
+
+                <sheet>
+
+                        <field name="name" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                     <group col="4">
+                        <field name="date" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="employee_id" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="department_id" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="type" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="job_id" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                        <field name="parent_id" attrs="{'readonly':[('state', '!=' ,'draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="resons" />
+                        <field name="supervisor_not"  attrs="{'readonly':[('state', '!=' ,'sent')]}"/> />
+                        <field name="hr_not" attrs="{'readonly':[('state', '!=' ,'confirm')]}"/> />
+                        <field name="genral_manger_not" attrs="{'readonly':[('state', '!=' ,'approve')]}"/> />
+                        <field name="accept_date" attrs="{'readonly':[('state', '!=' ,'done')]}"/> />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="resignation_search" model="ir.ui.view">
+        <field name="name">resignation.search</field>
+        <field name="model">resignation</field>
+        <field name="arch" type="xml">
+            <search string="resignation">
+                <field name="employee_id" />
+                <field name="state"/>
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="type"/>
+                <group expand="0" string="Group By">
+                    <filter name="by_state"  domain="[]" context="{'group_by' : 'employee_id'}" />
+                    <filter name="by_state"  domain="[]" context="{'group_by' : 'state'}" />
+                    <filter name="by_name"  domain="[]" context="{'group_by' : 'name'}" />
+                    <filter name="by_department_id"  domain="[]" context="{'group_by' : 'department_id'}" />
+                    <filter name="by_type"  domain="[]" context="{'group_by' : 'type'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_resignation" model="ir.actions.act_window">
+        <field name="name">Quit</field>
+        <field name="res_model">resignation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem  parent="menu_services" id="menu_resignation_services" action="action_resignation"   sequence="10"/>
+
+
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="external_layout_mozan" inherit_id="web.external_layout" primary="True">
+            <xpath expr="//t[@t-call='web.external_layout_standard']" position="attributes">
+                <attribute name="t-call">is_mozan_stock_customization.external_layout_header_mozan</attribute>
+            </xpath>
+        </template>
+        <template id="external_layout_header_mozan" inherit_id="web.external_layout_standard" >
+            <xpath expr="//div[@class='header']/div[2]" position="inside">
+               <t t-foreach="docs" t-as="picking">
+                                  <div class = "pull-right">
+                                       <div t-if="picking.name">
+                                    <span t-field="picking.name"/>
+                                       </div>
+                            </div>
+                             </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <report
+            id="leave_request_id"
+            model="hr.holidays"
+            string="leave request"
+            report_type="qweb-pdf"
+            name="is_hr_french.leave_request_report"
+            file="is_hr_french.leave_request_report"
+        />
+
+        <report
+            id="end_duty_id"
+            model="end.duty"
+            string="End Duty"
+            report_type="qweb-pdf"
+            name="is_hr_french.end_duty_report"
+            file="is_hr_french.end_duty_report"
+        />
+         <report
+            id="custody_receiving"
+            model="custody"
+            string="نـمـوذج استلام عـهـده"
+            report_type="qweb-pdf"
+            name="is_hr_french.custody_receiving_report"
+            file="is_hr_french.custody_receiving_report"
+        />
+        <report
+            id="custody_request"
+            model="custody"
+            string="طلب تصديق عهدة"
+            report_type="qweb-pdf"
+            name="is_hr_french.custody_requests_report"
+            file="is_hr_french.custody_requests_report"
+        />
+        <report
+            id="custody_return"
+            model="custody"
+            string="نـمـوذج تسليم عـهـده مسترجعة"
+            report_type="qweb-pdf"
+            name="is_hr_french.custody_returns_report"
+            file="is_hr_french.custody_returns_report"
+        />
+        </data>
+    </odoo>

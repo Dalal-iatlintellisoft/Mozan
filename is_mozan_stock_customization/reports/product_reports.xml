@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <report
+            id="product_request_id"
+            model="product.product"
+            string="Product Stamp"
+            report_type="qweb-pdf"
+            name="is_mozan_stock_customization.report_simple_label"
+            file="is_mozan_stock_customization.report_simple_label"
+        />
+        <report
+            id="product_delivery_id"
+            model="stock.picking"
+            string="Products Delivery"
+            report_type="qweb-pdf"
+            name="is_mozan_stock_customization.delivery_report"
+            file="is_mozan_stock_customization.delivery_report"
+        />
+    </data>
+</odoo>

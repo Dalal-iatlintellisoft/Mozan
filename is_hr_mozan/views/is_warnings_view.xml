@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+	<record model="ir.ui.view" id="warning_management_new">
+            <field name="name">Warning Management</field>
+            <field name="model">hr.warnings</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <header>
+                        <button string="Submit" name="warning_submit" states="draft" type="object" class="oe_inline oe_highlight"/>
+						<button string="Refuse" name="warning_refuse" states="seen" type="object"  class="oe_inline" />
+						<button string="Reset To Draft" name="warning_reset" states="refuse" type="object" class="oe_inline oe_highlight"/>
+                        <button string="Seen By Manger" name="warning_seen" states="confirm" type="object"  class="oe_inline oe_highlight"/>
+                        <button string="Manger Approve" name="warning_hr_approval" states="seen" type="object"  class="oe_inline oe_highlight"/>
+                        <button string="HR Approve " name="warning_penalty_approval" states="hr" type="object"  class="oe_inline oe_highlight"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirm,seen,hr,penalty_approval"/>
+					</header>
+		<sheet>
+             <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+		<group  col="4">
+            <field name="warning" />
+            <field name="leval" />
+		    <field name="employee_id" />
+            <field name="wage"  />
+		</group>
+
+       <group string="Penalty"  col="2">
+			<field name="pen_type" />
+			<field name="deduct_dayes" />
+			<field name="deduct_amount" />
+			<field name="pen_desc" />
+			<field name="hr_notes" />
+		</group>
+		<group string="Employee Explanation">
+			<field name="explanation_date"  />
+			<field name="explanation" />
+		</group>
+
+
+		</sheet>
+
+		</form>
+	   </field>
+	</record>
+	<record model="ir.ui.view" id="warning_management_new_tree">
+            <field name="name">Warning Management Tree</field>
+            <field name="model">hr.warnings</field>
+            <field name="arch" type="xml">
+                <tree string="Leave Plan(s)">
+                   <field name="employee_id"/>
+		        <field name="warning_date"/>
+					<field name="create_uid"/>
+                <field name="write_uid"/>
+					<field name="state"/>
+                </tree>
+            </field>
+        </record>
+	<record model="ir.actions.act_window" id="warning_management_ac">
+            <field name="name">Warnings</field>
+            <field name="res_model">hr.warnings</field>
+            <field name="view_type">form</field>
+	    <field name="view_mode">tree,form</field>
+        </record>
+
+		 <record id="hr_warnings_filter" model="ir.ui.view">
+            <field name="name">hr.warnings.search</field>
+            <field name="model">hr.warnings</field>
+            <field name="arch" type="xml">
+                <search string="Search warnings">
+                    <field name="name" />
+					<field name="employee_id"/>
+					<field name="pen_type"/>
+                    <filter string="Draft" domain="[('state','=','draft')]" help="Draft Overtimes"/>
+                    <filter string="Department Approved" domain="[('state','=','approve')]" help="warnings approved by department"/>
+                    <filter string="Finance Approved" domain="[('state','=','done')]" help="warnings approved by Finance"/>
+                    <filter string="First  Alarm" domain="[('pen_type','=','first')]" help="First Alarm"/>
+                    <filter string="second Alarm  " domain="[('pen_type','=','second')]" help="second Alarm"/>
+                    <filter string="third Alarm   " domain="[('pen_type','=','third')]" help="third Alarm"/>
+					<group col="8" colspan="4" expand="0" string="Group By">
+                        <filter string="State" name="state" context="{'group_by':'state'}"/>
+                        <filter string="warnings Type" name="pen_desc" context="{'group_by':'pen_desc'}"/>
+                        <filter string="warnings employee" name="pen_desc" context="{'group_by':'employee_id'}"/>
+                        <filter string="pen_type " name="pen_type" context="{'group_by':'pen_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+		<record id="act_hr_employee_warning_" model="ir.actions.act_window">
+            <field name="name">Violations of employees</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.warnings</field>
+            <field name="src_model">hr.warnings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
+            <field name="search_view_id" ref="hr_warnings_filter"/>
+        </record>
+
+
+		<record id="act_hr_employee_warning_menu" model="ir.actions.act_window">
+            <field name="name">Violations of employees</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.warnings</field>
+            <field name="src_model">hr.warnings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hr_warnings_filter"/>
+        </record>
+
+
+		<menuitem name="Warning Management" parent="menu_french_hr" id="menu_warning_management" sequence="40" />
+		<menuitem parent="menu_warning_management" id="menu_warning_management_new" action="act_hr_employee_warning_menu" />
+
+		<!-- Tree view of Relationship Type -->
+
+
+		<record model="ir.ui.view" id="warning_warning_new_tree">
+            <field name="name">Warning Management Tree</field>
+            <field name="model">warning.warning</field>
+            <field name="arch" type="xml">
+                <tree string="warning ">
+                   <field name="name"/>
+
+                </tree>
+            </field>
+        </record>
+
+		<record id="view_warning_warnings_form2" model="ir.ui.view">
+			<field name="name">warning.warning.form</field>
+			<field name="model">warning.warning</field>
+			<field name="arch" type="xml">
+				<form string=" warnings">
+					<sheet>
+					<field name="name"/>
+	<notebook>
+			<page string ='penalty'>
+			<field name="penalty_ids">
+				<tree editable="bottom">
+				<field name="leval"/>
+				<field name="name"/>
+				<field name="deduct_dayes"/>
+				<field name="deduct"/>
+				</tree>
+			</field>
+						</page>
+	</notebook>
+
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Action of Penalty Type -->
+		<record id="action_warning_warnings_conf" model="ir.actions.act_window">
+			<field name="name">Sanctions Regulation </field>
+			<field name="res_model">warning.warning</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+
+	<menuitem parent="menu_warning_management" id="menu_warning_warning_new" action="action_warning_warnings_conf" />
+
+
+
+		<!--Management-->
+
+
+	</data>
+</odoo>
+

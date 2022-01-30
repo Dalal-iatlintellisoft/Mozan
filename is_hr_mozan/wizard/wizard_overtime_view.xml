@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_overtime_report">
+            <field name="name">wizard.overtime.form</field>
+            <field name="model">wizard.overtime</field>
+            <field name="arch" type="xml">
+                <form string="Overtime">
+                    <group colspan="4" col="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <!--<field name="overtime_line"/>-->
+                    </group>
+                    <footer>
+                        <button name = "print_report"  string="Print"  type="object" class="oe_highlight"/> or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_overtime_report_excel" model="ir.actions.act_window">
+            <field name="name">overtime Excel Report</field>
+            <field name="res_model">wizard.overtime</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_overtime_excel">
+            <field name="name">view.overtime.report.excel</field>
+            <field name="model">overtime.month.excel</field>
+            <field name="arch" type="xml">
+                <form string="File to Downloads">
+                        <field name="name" invisible="1"/>
+                        <field name="file_download" filename="name"/>
+                </form>
+            </field>
+        </record>
+
+    <menuitem action="action_overtime_report_excel" name="Overtime Report" id="menu_overtime_report" parent="hr_payroll.menu_hr_payroll_root" sequence="10" groups="hr.group_hr_manager"/>
+
+    </data>
+</openerp>

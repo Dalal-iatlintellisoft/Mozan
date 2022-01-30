@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_inherit_tree" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="project_name"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_picking_inherit_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <field name="show_mark_as_todo" position="after">
+               <field name="show_inspection" invisible="1"/>
+            </field>
+
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,waiting_inspection,assigned,done" />
+            </xpath>
+
+            <!--<xpath expr="//header/button[@name='button_validate']" position="replace">-->
+                <!--<button name="button_validate" attrs="{'invisible': [('show_validate', '=', False),('show_inspection', '=', False)]}" string="Validate" groups="stock.group_stock_user" type="object" class="oe_highlight"/>-->
+            <!--</xpath>-->
+
+            <!--<xpath expr="//header/button[@name='button_validate']" position="attributes">-->
+            <!--<attribute name="invisible">show_validate = False</attribute>-->
+            <!--</xpath>-->
+
+            <xpath expr="//form/sheet/group/group/field[@name='partner_id']" position="after">
+                <field name="warehouse_id"/>
+            </xpath>
+
+            <field name="warehouse_id" position="after">
+                <field name="code"/>
+            </field>
+
+            <field name="code" position="after">
+                <field name="project_name"  attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+            </field>
+
+            <field name="project_name" position="after" >
+                <field name="project_code" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+            </field>
+
+            <field name="project_code" position="after" >
+                <field name="account_analytic_id" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+            </field>
+
+            <field name="origin" position="after" >
+                <field name="request_id" attrs="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+            </field>
+
+            <field name="request_id" position="after">
+                <field name="locatin" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+            </field>
+
+            <!--<xpath expr="//field[@name='move_lines']/tree/field[@name='product_uom']" position="after">-->
+                <!--<field name="price_unit" attrs="{'column_invisible': [('parent.picking_type_code', '=', 'outgoing')]}"/>-->
+            <!--</xpath>-->
+
+            <xpath expr="//field[@name='move_lines']/tree/field[@name='product_uom']" position="after">
+                <field name="subtotal" attrs="{'column_invisible': [('parent.picking_type_code', '=', 'outgoing')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_lines']/tree/field[@name='subtotal']" position="after">
+                <field name="remain_qty" />
+            </xpath>
+
+            <xpath expr="//field[@name='move_lines']/tree/field[@name='remain_qty']" position="after">
+                <field name="previous_picking" attrs="{'column_invisible': [('parent.picking_type_code', '=', 'outgoing')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_lines']/tree/field[@name='previous_picking']" position="after">
+                <field name="last_out" attrs="{'column_invisible': [('parent.picking_type_code', '=', 'incoming')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_lines']/tree/field[@name='last_out']" position="after">
+                <field name="matching" attrs="{'column_invisible': [('parent.picking_type_code', '=', 'outgoing')]}"/>
+            </xpath>
+
+        </field>
+
+    </record>
+
+    <!--<record id="view_picking_internal_search" model="ir.ui.view">-->
+    <!--<field name="name">stock.picking.internal.search</field>-->
+    <!--<field name="model">stock.picking</field>-->
+    <!--<field name="arch" type="xml">-->
+    <!--</field>-->
+    <!--</record>-->
+</odoo>

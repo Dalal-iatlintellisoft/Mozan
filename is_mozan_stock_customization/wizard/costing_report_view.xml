@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+
+   
+    <record id="view_costing_report_report" model="ir.ui.view">
+      <field name="name">wizard.costing.report</field>
+      <field name="model">wizard.costing.report</field>
+      <field name="arch" type="xml">
+        <form string="Costing Report" version="7.0">
+            <group col = "4">
+                <field name ="start_date"/>
+                 <field name ="end_date"/>
+                  <field name ="product_id"/>
+            </group>
+          <footer>
+            <button name = "print_report"  string="Print"  type="object" class="oe_highlight"/> or
+            <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+      <record model="ir.ui.view" id="view_costing_report_excel">
+            <field name="name">view.costing.report.excel</field>
+            <field name="model">costing.report.excel</field>
+            <field name="arch" type="xml">
+                <form string="File to Downloads">
+                        <field name="name" invisible="1"/>
+                        <field name="file_download" filename="name"/>
+                </form>
+            </field>
+        </record>
+
+
+
+    <record id="action_costing_report" model="ir.actions.act_window">
+      <field name="name">Costing Report</field>
+      <field name="res_model">wizard.costing.report</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_costing_report_report"/>
+      <field name="target">new</field>
+    </record>
+	
+
+     <menuitem action="action_costing_report" name="Costing Report" id="menu_action_costing_report" parent="stock.menu_warehouse_report"/>
+
+
+  </data>
+</openerp>

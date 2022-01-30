@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_move_inherit_form" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/group/group/div/field[@name='product_uom']" position="after">
+                <field name="price_unit"/>
+            </xpath>
+
+            <field name="price_unit" position="after">
+                <field name="subtotal"/>
+            </field>
+
+            <field name="subtotal" position="after">
+                <field name="remain_qty" />
+            </field>
+
+            <field name="remain_qty" position="after" >
+                <field name="previous_picking"/>
+            </field>
+
+            <field name="previous_picking" position="after" >
+                <field name="last_out"/>
+            </field>
+
+        </field>
+    </record>
+
+    <!--<record id="view_picking_internal_search" model="ir.ui.view">-->
+    <!--<field name="name">stock.picking.internal.search</field>-->
+    <!--<field name="model">stock.picking</field>-->
+    <!--<field name="arch" type="xml">-->
+    <!--</field>-->
+    <!--</record>-->
+</odoo>

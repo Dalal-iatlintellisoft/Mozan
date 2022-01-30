@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record model="ir.ui.view" id="view_hr_payslip_form_inherited">
+        <field name="name">view.hr.payslip.form.inherited</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_payslip_done']" position="replace">
+                <button string="Confirm" name="action_payslip_done" type="object" states="confirm" groups="account.group_account_manager" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='number']" position="before">
+                <!--<field name="no_of_days"/>-->
+                <!--<field name="worked_days" invisible="1"/>-->
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_done']" position="before">
+                <button string="Approve" name="action_hr_confirm" type="object" states="draft" class="oe_highlight"/>
+            </xpath>
+            <xpath expr='//notebook/page'  position="after">
+			  <page string="Deductions">
+				<center>
+				<table border="0" width="100%" cellspacing="10" cellpadding="5">
+				<tr>
+                <td>
+				<h3><label for="penalties_deduction" string="Penalties Dedication" /></h3></td>
+				<td>
+				<field name="penalties_deduction"/></td>
+
+				<td>
+				<h3><label for="personal_loan" string="Personal Loan" /></h3></td>
+				<td><field name="personal_loan"/></td>
+				<td>
+				<h3><label for="short_loan" string="Monthly Loan" /></h3></td>
+				<td>
+				<field name="short_loan"/></td>
+
+				</tr>
+				</table></center>
+                  <!--<field name="unpaid_leave" invisible="1"/>-->
+                  <!--<field name="income_tax" invisible="1"/>-->
+                  <!--<field name="representation_allw" invisible="1"/>-->
+                  <!--<field name="family_burdens" invisible="1"/>-->
+                  <!--<field name="net_salary" invisible="1"/>-->
+			  </page>
+			</xpath>
+            </field>
+        </record>
+        <!--modify-->
+		<!--<record model="ir.ui.view" id="view_hr_payslip_filter_inherited">-->
+        <!--<field name="name">view.hr.payslip.filter.inherited</field>-->
+        <!--<field name="model">hr.payslip</field>-->
+        <!--<field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>-->
+        <!--<field name="arch" type="xml">-->
+			<!--<xpath expr='//search/filter' position="after">-->
+				<!--<seperator/>-->
+				<!--<filter string="Current Month" domain="[('date_from','=', datetime.datetime.now().strftime('%Y-%m-01'))]"/>-->
+			<!--</xpath>-->
+				<!--</field>-->
+		<!--</record>-->
+		<record model="ir.ui.view" id="view_payslip_tree_inherited">
+        <field name="name">view.payslip.tree.inherited</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_to']" position="after">
+                <field name="net_salary" sum="net_salary"/>
+            </xpath>
+                </field>
+        </record>
+
+    <record model="ir.ui.view" id="view_hr_payslip_run_form_inherited">
+        <field name="name">view.hr.payslip.run.form.inherited</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='close_payslip_run']" position="replace">
+                 <button string="Confirm" name="close_payslip_run" states="confirm" type="object"  class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='close_payslip_run']" position="before">
+                <button string="Approve" name="action_hr_confirm" type="object" states="draft" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='draft_payslip_run']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+    </field>
+    </record>
+    <record id="view_change_bonus_tree" model="ir.ui.view">
+			<field name="name">change.bonus.tree</field>
+			<field name="model">change.bonus</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" string="Month"/>
+					<field name="amount" string="Amount"/>
+				</tree>
+			</field>
+	</record>
+    <record id="view_change_bonus_form" model="ir.ui.view">
+			<field name="name">change.bonus.form</field>
+			<field name="model">change.bonus</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="name" string="Month"/>
+							<field name="amount" string="Amount"/>
+						</group>
+					</sheet>
+				</form>
+
+			</field>
+		</record>
+
+		<record id="action_change_bonus" model="ir.actions.act_window">
+			<field name="name">Change Bonus</field>
+			<field name="res_model">change.bonus</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	<menuitem name="Change Bonus" parent="hr_payroll.menu_hr_payroll_configuration" id="menu_change_bonus" action="action_change_bonus" />
+</odoo>

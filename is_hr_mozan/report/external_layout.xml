@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="inherit_external_layout_header" inherit_id="report.external_layout_header">
+            <!-- Replace header information -->
+            <xpath expr="//div[@class='header']" position='replace'>
+                <div class="header">
+                     <table class="table" style="direction: center;">
+                                                <tr class="text-center">
+
+                         <td class="row row-centered">
+                                <img src='/is_hr_french/static/src/img/header.png'  style="max-height:100px; max-width:500px;direction: center "/>
+                            </td>
+                    </tr>
+                    </table>
+                </div>
+            </xpath>
+        </template>
+        <!--<template id="inherit_external_layout_footer" inherit_id="report.external_layout_footer">-->
+            <!--&lt;!&ndash; Replace footer information &ndash;&gt;-->
+            <!--<xpath expr="//div[@class='footer']" position='replace'>-->
+                <!--<div class="footer">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-xs-3">-->
+                            <!--<img t-if="company.company_footer"-->
+                                 <!--t-att-src="'data:image/png;base64,%s' % company.company_footer"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</xpath>-->
+        <!--</template>-->
+    </data>
+</odoo>

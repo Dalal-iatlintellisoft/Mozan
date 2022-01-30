@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_delay_loan" model="ir.ui.view">
+            <field name="name">delay.loan</field>
+            <field name="model">delay.loan</field>
+            <field name="arch" type="xml">
+                <form string="Grant by Employees">
+
+                    <group colspan="4" >
+                        <field name="loan_id" invisible="1"/>
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                    <footer>
+                        <button name = "compute_delay_loan"  string="تأجيل السلفية"  type="object" class="oe_highlight"/> or
+                        <button name = "cancel_delay_loan"  string=" الغاء تأجيل السلفية"  type="object" class="oe_highlight"/> or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_delay_loan" model="ir.actions.act_window">
+            <field name="name">Dealy Loan</field>
+            <field name="res_model">delay.loan</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_loan_id':active_id}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_delay_loan"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

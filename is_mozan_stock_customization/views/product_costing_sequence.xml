@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- check job_no Sequence -->
+        <record id="seq_product_costing" model="ir.sequence">
+            <field name="name">No.</field>
+            <field name="code">product.cost.no</field>
+            <field name="prefix">Costing/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">no_gap</field>
+        </record>
+    </data>
+</openerp>

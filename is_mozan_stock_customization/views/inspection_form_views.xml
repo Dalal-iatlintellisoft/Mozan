@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="product_inspection_line_tree" model="ir.ui.view">
+        <field name="name">product.inspection.line.tree</field>
+        <field name="model">product.inspection.line</field>
+        <field name="arch" type="xml">
+            <tree string="Product">
+                <field name="product_id" />
+                <field name="not_matched"/>
+                <field name="matched"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_inspection_order_form">
+        <field name="name">inspection.order.form</field>
+        <field name="model">inspection.order</field>
+        <field name="arch" type="xml">
+            <form string="Inspection Order">
+                <header>
+                    <button name="button_confirm" states="draft" string="Confirm" type="object" class="btn-primary"/>
+                    <button name="button_approve" states="confirm" string="Approve" type="object" class="btn-primary"/>
+                    <button name="button_manager_approve" states="approve" string="Manager Approve" type="object" class="btn-primary"/>
+                    <button name="action_cancel" states="draft,confirm,dapprove,manager_approve" string="Cancel Call" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,dapprove,manager_approve,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="get_product_inspection"  string="Get Product" type="object"  class="oe_stat_button" icon="fa-list-alt"  attrs="{'invisible':[('state', '=', 'confirm')]}"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Inspection Form Name" attrs="{'readonly':[('state', '=', 'manager_approve')]}"/>
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <field name="inspection_date"/>
+                        <field name="date_approve"/>
+                    </group>
+                    <group col="4">
+                        <field name="order_id" widget="selection" domain="[('picking_type_code', '=', 'incoming'),('state','not in',['done','cancle'])]"/>
+                        <field name="partner_id" widget="selection"/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="inspection_lines" context="{'form_view_ref':'is_purchase_customization.product_inspection_line_form', 'tree_view_ref':'is_purchase_customization.product_inspection_line_tree'}" attrs="{'readonly':[('state', '=', 'manager_approve')]}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--<div class="oe_chatter">-->
+                <!--<field name="message_follower_ids" widget="mail_followers"/>-->
+                <!--<field name="message_ids" widget="mail_thread"/>-->
+                <!--</div>-->
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_inspection_order_tree">
+        <field name="name">inspection.order.tree</field>
+        <field name="model">inspection.order</field>
+        <field name="arch" type="xml">
+            <tree decoration-bf="message_needaction==True" decoration-muted="state == 'cancel'"  string="Inspection Order">
+                <field name="message_needaction" invisible="1"/>
+                <field name="name"/>
+                <field name="inspection_date"/>
+                <field name="order_id"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id ="product_inspection_line_form"  model="ir.ui.view" >
+        <field name="name">product.inspection.line.form</field>
+        <field name="model">product.inspection.line</field>
+        <field name="arch" type="xml">
+            <form string="Product">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="product_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="product_id"/>
+                        </h1>
+                    </div>
+
+                        <group string="Quantity">
+                            <field name="order_qty"/>
+                            <field name="incoming_qty"/>
+                        </group>
+
+                        <group string="Inspection Results :">
+                            <group>
+                                <field name="specifications"/>
+                            </group>
+                            <group>
+                                <field name="ordered_quantities"/>
+                            </group>
+                            <group>
+                                <field name="damage"/>
+                            </group>
+                            <group>
+                                <field name="terms"/>
+                            </group>
+                        </group>
+
+                        <group col ='4' string="Inspection Resolution :">
+                            <field name="matched" attrs="{'readonly':[('not_matched', '=', True)]}"/>
+                            <field name="not_matched" attrs="{'readonly':[('matched', '=', True)]}"/>
+                        </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_inspection_order_filter" model="ir.ui.view">
+        <field name="name">inspection.order.list.select</field>
+        <field name="model">inspection.order</field>
+        <field name="arch" type="xml">
+            <search string="Search Inspection Order">
+                <field name="name" string="Name" filter_domain="['|', ('name','ilike',self), ('origin','ilike',self)]"/>
+                <field name="partner_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]" help="New Request"/>
+                <filter string="Confirmed" domain="[('state','in',('confirm','approve'))]" help="In negotiation"/>
+                <filter string="Manager Approve" domain="[('state','=','manager_approve')]"/>
+                <separator/>
+                <field name="order_id" string="Purchase Order"/>
+                <group expand="0" string="Group By">
+                    <filter string="order_id" domain="[]" context="{'group_by':'order_id'}"/>
+                    <filter string="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_inspection_order">
+        <field name="name">Inspection Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">inspection.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context"></field>
+        <field name="search_view_id" ref="view_inspection_order_filter"/>
+    </record>
+
+    <menuitem id="menu_inspection_order"  parent="stock.menu_stock_warehouse_mgmt" action="action_inspection_order"/>
+</odoo>

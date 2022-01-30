@@ -1,0 +1,203 @@
+<odoo>
+  <data>
+
+ <menuitem name="Custody" id="menu_custody_management" parent="menu_french_hr"  sequence="55"/>
+<!--Custody Request-->
+
+    <record model="ir.ui.view" id="custody_request_tree_view">
+      <field name="name">custody.request.tree</field>
+      <field name="model">custody.request</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="department_id"/>
+          <field name="department_id"/>
+          <field name="date_request"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="custody_request_form_view">
+      <field name="name">custody.request.form</field>
+      <field name="model">custody.request</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+                <button string="Send To HR" name="send_to_hr" states="draft" type="object"  class="oe_highlight"/>
+                <button string="Approve" name="hr_confirm" states="sent" type="object" class="oe_highlight" groups="hr.group_hr_manager"/>
+                <button string="Confirm" name="account_confirm" states="confirm" type="object"  class="oe_highlight" groups="account.group_account_manager"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,confirm,approve"/>
+            </header>
+            <sheet>
+                <group col="4">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="date_request"/>
+                </group>
+                <notebook>
+                  <page string="Requested Items">
+                    <field name="custody_line_ids">
+                            <tree editable="bottom">
+                               <field name="name"/>
+                               <field name="note"/>
+                            </tree>
+                      </field>
+                  </page>
+                </notebook>
+
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+      <!-- actions Custody request opening views on models -->
+
+    <record model="ir.actions.act_window" id="custody_request_action">
+      <field name="name">Custody Request</field>
+      <field name="res_model">custody.request</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- menu Custody request -->
+    <!--<menuitem id="menu_custody_request" parent="menu_custody_management" action="custody_request_action"  sequence="5"/>-->
+
+      <!--Custody Management-->
+
+  <record model="ir.ui.view" id="custody_tree_view">
+      <field name="name">custody.tree</field>
+      <field name="model">custody</field>
+      <field name="arch" type="xml">
+        <tree>
+              <field name="name"/>
+              <!--<field name="custody_received_date"/>-->
+              <!--<field name="custody_delivery_date"/>-->
+              <!--<field name="custody_line_ids"/>-->
+              <!--<field name="state"/>-->
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="custody_mg_form_view">
+      <field name="name">custody.management.form</field>
+      <field name="model">custody</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+                <button string="Send To HR" name="send_to_hr" states="draft" type="object"  class="oe_highlight"/>
+                <button string="Approve custody receive" name="hr_confirm" states="sent" type="object" class="oe_highlight" groups="hr.group_hr_manager"/>
+                <button string="Confirm Custody receive" name="account_confirm" states="confirm" type="object"  class="oe_highlight" groups="account.group_account_manager"/>
+                <button string="Approve Custody Delivery" name="hr_custody_receive" states="approve" type="object"  class="oe_highlight" groups="hr.group_hr_manager"/>
+                <button string="Confirm Custody Delivery" name="account_custody_receive" states="receive_custody_hr" type="object"  class="oe_highlight" groups="account.group_account_manager"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,confirm,approve,receive_custody_hr,receive_custody_account"/>
+            </header>
+            <sheet>
+                    <group col="4">
+                      <field name="name"/>
+                      <field name="request_date"/>
+                    </group>
+
+                <notebook>
+                  <page string="Custody Items">
+                    <field name="custody_line_ids">
+                            <tree editable="bottom">
+                               <field name="name"/>
+                               <field name="custody_no"/>
+                               <field name="custody_received_date"/>
+                               <field name="custody_delivery_date"/>
+                               <field name="note"/>
+                            </tree>
+                      </field>
+                  </page>
+                </notebook>
+
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+      </field>
+    </record>
+  <record id="custody_mg_filter" model="ir.ui.view">
+        <field name="name">custody.search</field>
+        <field name="model">custody</field>
+        <field name="arch" type="xml">
+            <search string="Search Custody">
+                <field name="name"/>
+                <field name="request_date"/>
+                <filter string="Draft" domain="[('state','=','draft')]" help="Draft Custody"/>
+                <filter string="Approved" domain="[('state','=','sent')]" help="Sent Custody"/>
+                <filter string="Approved" domain="[('state','=','approve')]" help="Approved Custody"/>
+                <filter string="Confirmed" domain="[('state','=','confirm')]" help="Confirmed Custody"/>
+                <filter string="Hr Received" domain="[('state','=','receive_custody')]" help="Confirmed Custody"/>
+                <filter string="Done" domain="[('state','=','receive_custody_account')]" help="Confirmed Custody"/>
+                <group col="8" colspan="4" expand="0" string="Group By">
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                    <filter string="Employee" name="name" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="custody_action">
+      <field name="name">Custody Request</field>
+      <field name="res_model">custody</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- menu Custody request -->
+
+    <menuitem id="menu_custody" parent="menu_custody_management" action="custody_action"  sequence="15"/>
+
+   <!--custody items-->
+
+    <record model="ir.ui.view" id="custody_item_view">
+      <field name="name">custody.item.tree</field>
+      <field name="model">custody.item</field>
+      <field name="arch" type="xml">
+        <tree>
+              <field name="name"/>
+              <field name="custody_no"/>
+
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="custody_item_form_view">
+      <field name="name">custody.item.form</field>
+      <field name="model">custody.item</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                    <group col="2">
+                      <field name="name"/>
+                    <field name="custody_no"/>
+                    </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="custody_item_action">
+      <field name="name">Custody Items</field>
+      <field name="res_model">custody.item</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- menu hotel request -->
+
+    <menuitem name="Configuration" id="menu_support_configuration" parent="menu_custody_management"  sequence="100"/>
+    <menuitem id="menu_custody_item" parent="menu_support_configuration" action="custody_item_action" groups="hr.group_hr_manager"  sequence="5"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custody_returns_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+
+                        <div class="page">
+                            <div class="oe_structure">
+                                <div class="row row-centered">
+                                    <div class="col-md-12 col-centered">
+                                            <table class="table" style="direction: ltr;">
+                                                <tr class="text-center">
+                                                    <td colspan="12" style="border: 1px solid black;">
+                                                        <h6 class="text-center" style="border-bottom: 1px solid black;">
+
+                                                            <u>
+                                                                <strong> Custody Receiving Report</strong>
+                                                            </u>
+                                                        </h6>
+                                                    </td>
+                                                </tr>
+
+                                               </table>
+                                        <strong> I would like to list down the equipment and tools that I received from your department. Which are :</strong>
+                                        <table style="width:100%" dir="rtl">
+                                <tr>
+                                    <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">م</td>
+                                    <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">البيان</td>
+                                    <td style="border:1px solid black; background-color: rgba(128,128,128,.2);" class="text-center">ملاحظات</td>
+                                </tr>
+                                <t t-set="counter" t-value="0"/>
+                                <t t-foreach="o.custody_line_ids" t-as="custody">
+                                    <tr>
+                                        <td style="border:1px solid black;" class="text-center">
+                                            <t t-esc="counter+1"/>
+                                            <t t-set="counter" t-value="counter+1"/>
+                                        </td>
+                                        <td style="border:1px solid black" class="text-center">
+                                            <span t-field="custody.name"/>
+                                        </td>
+                                        <td style="border:1px solid black" class="text-center">
+                                            <span t-field="custody.note"/>
+                                        </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                        <br></br>
+                                        I'mMr./ …………………………………………………………….. And I have full responsibility for this equipment I have received.
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </template>
+        </data>
+    </odoo>

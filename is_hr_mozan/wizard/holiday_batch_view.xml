@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_holiday_change_date_form" model="ir.ui.view">
+            <field name="name">holiday.change.date</field>
+            <field name="model">holiday.change.date</field>
+            <field name="arch" type="xml">
+                <form string="Grant by Employees">
+                    <group>
+                        <field name="date"/>
+                    </group>
+                    <footer>
+                        <button name = "compute_grant_sheet"  string="Change"  type="object" class="oe_highlight"/> or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_hr_holiday_change_date" model="ir.actions.act_window">
+            <field name="name">Change Date</field>
+            <field name="res_model">holiday.change.date</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_holiday_change_date_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

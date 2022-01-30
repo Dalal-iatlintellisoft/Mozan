@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+
+   
+    <record id="view_sales_report" model="ir.ui.view">
+      <field name="name">wizard.sale.report</field>
+      <field name="model">wizard.sale.report</field>
+      <field name="arch" type="xml">
+        <form string="Sale Reports" version="7.0">
+            <group col = "4">
+                <field name ="start_date"/>
+                 <field name ="end_date"/>
+            </group>
+          <footer>
+            <button name = "print_report"  string="Print"  type="object" class="oe_highlight"/> or
+            <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+      <record model="ir.ui.view" id="view_sales_report_excel">
+            <field name="name">view.sales.report.excel</field>
+            <field name="model">sales.report.excel</field>
+            <field name="arch" type="xml">
+                <form string="File to Downloads">
+                        <field name="name" invisible="1"/>
+                        <field name="file_download" filename="name"/>
+                </form>
+            </field>
+        </record>
+
+
+
+    <record id="action_sales_report" model="ir.actions.act_window">
+      <field name="name">Sales Report</field>
+      <field name="res_model">wizard.sale.report</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_sales_report"/>
+      <field name="target">new</field>
+    </record>
+	
+
+     <menuitem action="action_sales_report" name="Sales Report" id="menu_action_sales_report" parent="sale.menu_sale_report"/>
+
+
+  </data>
+</openerp>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_paysheet_test">
+            <field name="name">wizard.pay.sheet.form</field>
+            <field name="model">wizard.paysheet</field>
+            <field name="arch" type="xml">
+                <form string="Pay Sheet">
+                    <group colspan="4" col="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                    <footer>
+                        <button name = "print_report"  string="Print"  type="object" class="oe_highlight"/> or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_paysheet_report_excel">
+            <field name="name">view.payslip.report.excel</field>
+            <field name="model">payslip.report.excel</field>
+            <field name="arch" type="xml">
+                <form string="File to Downloads">
+                        <field name="name" invisible="1"/>
+                        <field name="file_download" filename="name"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_payslip_report_excel" model="ir.actions.act_window">
+            <field name="name">Paylsip Report Excel Report</field>
+            <field name="res_model">wizard.paysheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+     <menuitem action="action_payslip_report_excel" name="Pay Sheet Report" id="menu_paysliper_jkwe_report" parent="hr_payroll.menu_hr_payroll_root"  groups="hr.group_hr_manager"/>
+
+    </data>
+</openerp>

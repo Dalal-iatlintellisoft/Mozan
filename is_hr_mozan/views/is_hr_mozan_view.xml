@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="view_education_tree" model="ir.ui.view">
+			<field name="name">educational.level.tree</field>
+			<field name="model">educational.level</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+				</tree>
+			</field>
+	</record>
+		<record id="view_education_form1" model="ir.ui.view">
+			<field name="name">educational.level.form</field>
+			<field name="model">educational.level</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="name" string="Degree"/>
+						</group>
+					<notebook>
+					<page string="Sections">
+						<field name="edu_section_ids">
+						<tree editable="bottom">
+							<field name="name"/>
+						</tree>
+						</field>
+					</page>
+					</notebook>
+					</sheet>
+				</form>
+
+			</field>
+		</record>
+
+		<record id="action_education_form" model="ir.actions.act_window">
+			<field name="name">Education Degree</field>
+			<field name="res_model">educational.level</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	<menuitem name="Degree" parent="hr.menu_human_resources_configuration" id="menu_education" action="action_education_form" groups="hr.group_hr_manager"/>
+
+	<!-- HR employee inherit -->
+		<record id="view_employees_form_inherit" model="ir.ui.view">
+			<field name="name">hr.employee.form.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+
+				<!---->
+
+
+				<xpath expr="//field[@name='user_id']" position="after">
+					<field name="hiring_date"/>
+					<field name="quit_date"/>
+				</xpath>
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="code"/>
+					<field name="signature" invisible="1"/>
+				</xpath>
+
+				<xpath expr="//field[@name='coach_id']" position="after">
+					<field name="is_manager"/>
+					<field name="staff_no"/>
+
+				</xpath>
+				<xpath expr="//page[@name='personal_information']" position="inside">
+					<group string="Education Level" name="edu_level">
+						<field name="graduation_year"/>
+						<field name="edu_level_id"/>
+						<field name="edu_section_id"/>
+					</group>
+				</xpath>
+				<xpath expr="//group[@name='edu_level']" position="after">
+					<group string="Practical experience">
+						<div>
+							<field name="year_experience"  class="oe_inline"/> Years and
+							<field name="month_experience"  class="oe_inline"/> Month
+						</div>
+					</group>
+				</xpath>
+
+				<xpath expr="//group[@name='active_group']" position="after">
+                <group string="Leaves" name="leave">
+					<field name="annual_leave"/>
+					<field name="leave_balance"/>
+					<field name="local_leave"/>
+					<field name="local_remaining_leaves"/>
+					<field name="local_leave_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='gender']" position="after">
+					<field name="mother_name"/>
+					<field name="blood" string="Blood"/>
+					<field name="insurance_class" />
+				</xpath>
+
+				<xpath expr="//group[@name='leave']" position="after">
+					<group string="National Military Service ">
+					<field name="national_service_from"/>
+					<field name="national_service_to"/>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='birthday']" position="after">
+					<field name="foreigner"/>
+					<field name="age"/>
+					<field name="age_in_years"/>
+					<field name="visa_date"/>
+					<field name="visa"/>
+					<field name="renew_date"/>
+					<field name="renew"/>
+				</xpath>
+                  <xpath expr="//notebook/page[3]" position="after">
+                <page string="Family ">
+                    <field name="family_member_ids">
+                        <tree editable="bottom">
+                            <field name="name" />
+                            <field name="gender" />
+                            <field name="birthday" />
+                            <field name="relation" />
+                        </tree>
+                    </field>
+                </page>
+                <page string="Qualifications ">
+                    <field name="qualifications_ids">
+                        <tree editable="bottom">
+                            <field name="name" />
+                            <field name="degree" />
+                            <field name="date" />
+                            <field name="university" />
+                        </tree>
+                    </field>
+
+                </page>
+
+                <page string="Skills And Tranning ">
+                    <field name="skills_ids">
+                        <tree editable="bottom">
+                            <field name="name" />
+                            <field name="degree" />
+                            <field name="date" />
+                            <field name="center" />
+                        </tree>
+                    </field>
+
+                </page>
+
+            </xpath>
+			</field>
+		</record>
+
+		<!-- hr contract -->
+	  <record id="view_hr_contract_leave" model="ir.ui.view">
+		  <field name="name">hr.contract.form.inherited</field>
+		  <field name="model">hr.contract</field>
+		  <field name="inherit_id" ref ="hr_contract.hr_contract_view_form"/>
+		  <field name="arch" type="xml">
+            <xpath expr="//group[@name='salary_and_advantages']" position="inside">
+            <group>
+                                  <field name="gross_salary"/>
+				  <field name="incentive"/>
+				  <field name="total_incentive"/>
+				  </group>
+		  </xpath>
+		  <xpath expr='//notebook/page'  position="after">
+			<page string="Leave">
+			<group>
+			<field name="legal_leave"/>
+			</group>
+			</page>
+		  </xpath>
+		  </field>
+		</record>
+
+
+</odoo>

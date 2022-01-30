@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="request_approve_quantities_view" model="ir.ui.view">
+        <field name="name">request.approve.quantities.view.form</field>
+        <field name="model">request.approve.quantities</field>
+        <field name="arch" type="xml">
+            <form string="Approve Ordered Quantities?">
+                <group>
+                    <p>
+                        You haven't entered <i>approve</i> quantities, by clicking on <i>apply</i>
+                        Odoo will process all the <i>ordered</i> quantities.
+                    </p>
+                </group>
+                <footer>
+                    <button name="process" string="_Apply" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

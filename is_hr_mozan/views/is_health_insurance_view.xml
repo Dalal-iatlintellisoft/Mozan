@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!--Loan Tree-->
+		<record id="tree_hr_insurance_view" model="ir.ui.view">
+			<field name="name">hr.health.insurance.tree</field>
+			<field name="model">hr.health.insurance</field>
+			<field name="arch" type="xml">
+				<tree string="Health Insurance Requests">
+					<field name="name"/>
+					<field name="employee_id"/>
+					<field name="insurance_amount"/>
+					<field name="date"/>
+					<field name="state"/>
+					<field name="create_uid"/>
+					<field name="write_uid"/>
+				</tree>
+			</field>
+		</record>
+
+		<!--Insurance Form-->
+		<record id="view_hr_insurance_form" model="ir.ui.view">
+			<field name="name">hr.health.insurance.form</field>
+			<field name="model">hr.health.insurance</field>
+			<field name="arch" type="xml">
+				<form string="Health Insurance Request">
+					<header>
+						<button string="send" name="send"  states="draft" type="object"  class="oe_highlight" />
+						<button string="Approval" name="account_approve"  states="send" type="object"  class="oe_highlight" />
+						<button string="Refuse" name="loan_refuse"  states="send" type="object"  class="oe_highlight" />
+						<button string="Reset To Draft" name="loan_reset" states="refuse" type="object" class="oe_highlight"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,emp_approve,hod_approve,admin_approve,account_approve" statusbar_colors='{"draft":"blue","confirm":"blue","done":"blue","refuse":"red"}'/>
+					</header>
+
+					<sheet>
+						<div class="oe_button_box oe_right">
+						</div>
+						<div class="oe_title">
+
+							<label for="name" class="oe_edit_only"/>
+							<h1>
+								<field name="name" class="oe_inline"/>
+							</h1>
+						</div>
+						<group col="4">
+							<field name="employee_id"  attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="date"/>
+							<div colspan="4">
+								<group col="4">
+									<field name="department_id"/>
+									<field name="job_id"/>
+									<field name="emp_salary"/>
+									<field name="insurance_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+									<!--<field name="installment_amount"/>-->
+									<field name="no_month" />
+									<field name="payment_start_date" />
+
+									<!--<field name="attach" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+								</group>
+							</div>
+						</group>
+						<notebook>
+							<page string="Insurance Installments">
+								<group>
+								</group>
+								<field name="insurance_line_ids">
+									<tree string="Loan Line" editable="bottom">
+										<field name="paid_date" attrs="{'readonly':True}"/>
+										<field name="paid_amount" attrs="{'readonly':True}"/>
+										<field name="paid" readonly="1"/>
+										<field name="notes"/>
+										<!--<button name="action_paid_amount" icon="gtk-execute" string="Pay Amount" type="object" />-->
+									</tree>
+								</field>
+								<group class="oe_subtotal_footer oe_right">
+									<div>
+										<label for="total_paid_amount"/>
+										<button name="button_reset_balance_total" states="draft"
+												string="(update)" class="oe_link oe_edit_only"
+												type="object" help="Recompute Balance"/>
+									</div>
+									<field name="total_paid_amount" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+									<field name="balance_amount" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+
+								</group>
+								<button type="object" name="compute_insurance_line" string="Compute" colspan="2" />
+								<div class="oe_clear"/>
+							</page>
+							<page string="Accounting Information">
+								<group col="4">
+									<field name="emp_account_id" />
+									<field name="treasury_account_id" />
+									<field name="pay_account_id" />
+									<field name="journal_id" />
+									<field name="move_id"/>
+
+									<!--<field name="insurance_amount" attrs="{'readonly':[('state','=','validate')]}"/>-->
+
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+     <!--modify-->
+		<!--<record id="view_hr_insurance_search" model="ir.ui.view">-->
+			<!--<field name="name">hr.health.insurance.search</field>-->
+			<!--<field name="model">hr.health.insurance</field>-->
+			<!--<field name="arch" type="xml">-->
+				<!--<search>-->
+					<!--<field name="employee_id"/>-->
+					<!--<field name="date"/>-->
+					<!--<field name="state"/>-->
+					<!--<field name="department_id"/>-->
+					<!--<group expand="0" string="Group By">-->
+						<!--<filter string="Employees" name="employee_id" context="{'group_by':'employee_id'}"/>-->
+						<!--<seperator/>-->
+						<!--<filter string="States" name="state" context="{'group_by':'state'}"/>-->
+					<!--</group>-->
+				<!--</search>-->
+			<!--</field>-->
+		<!--</record>-->
+
+		<record id="action_hr_insurance_request" model="ir.actions.act_window">
+			<field name="name">Health Insurance Requests</field>
+			<field name="res_model">hr.health.insurance</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Health Insurance Requests"
+				  parent="menu_hr_loans"
+				  id="menu_hr_insurance_request"
+				  action="action_hr_insurance_request"
+		/>
+
+	</data>
+</odoo>
